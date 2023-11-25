@@ -1,17 +1,18 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
+import { mockDataElectricityPrices } from "../../data/mockDataElectricityPrices";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+//import EmailIcon from "@mui/icons-material/Email";
+//import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+//import PersonAddIcon from "@mui/icons-material/PersonAdd";
+//import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
-import StatBox from "../../components/StatBox";
+//import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import { DatePicker, Card, SparkAreaChart, Text, Title } from "@tremor/react";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -54,17 +55,9 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
-            progress="0.75"
-            increase="+14%"
-            icon={
-              <EmailIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
+          <Box>
+            <DatePicker className="max-w-sm mx-auto" />;
+          </Box>
         </Box>
         <Box
           gridColumn="span 3"
@@ -72,57 +65,21 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-        >
-          <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
-            progress="0.50"
-            increase="+21%"
-            icon={
-              <PointOfSaleIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        ></Box>
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
-        >
-          <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            increase="+5%"
-            icon={
-              <PersonAddIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        ></Box>
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
-        >
-          <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            increase="+43%"
-            icon={
-              <TrafficIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        ></Box>
 
         {/* ROW 2 */}
         <Box
@@ -139,18 +96,11 @@ const Dashboard = () => {
           >
             <Box>
               <Typography
-                variant="h5"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Revenue Generated
-              </Typography>
-              <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                SOC 29/10/2023
               </Typography>
             </Box>
             <Box>
@@ -165,6 +115,7 @@ const Dashboard = () => {
             <LineChart isDashboard={true} />
           </Box>
         </Box>
+        {/**/}
         <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -180,40 +131,36 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Electricity price
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
-            <Box
-              key={`${transaction.txId}-${i}`}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              p="15px"
-            >
-              <Box>
-                <Typography
-                  color={colors.greenAccent[500]}
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  {transaction.txId}
-                </Typography>
-                <Typography color={colors.grey[100]}>
-                  {transaction.user}
-                </Typography>
-              </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
-              <Box
-                backgroundColor={colors.greenAccent[500]}
-                p="5px 10px"
-                borderRadius="4px"
-              >
-                ${transaction.cost}
-              </Box>
-            </Box>
-          ))}
+          <Box padding={"43px"}>
+            <Card className="max-w-lg flex items-center justify-between mx-auto px-4 py-6.5">
+              <div className="flex items-center space-x-2.5">
+                <Title>Electricity Prices</Title>
+              </div>
+              <div><Text className="hidden sm:block">Hourly Rates</Text></div>
+              <SparkAreaChart
+                data={mockDataElectricityPrices.map((item) => ({
+                  time: item.time,
+                  Price: item.price,
+                }))}
+                categories={["Price"]}
+                index={"time"}
+                colors={["emerald"]}
+                className="h-20 w-36"
+              />
+              <div className="flex items-center space-x-2.5 p-6">
+                {/* You can add additional details here, like current price, change, etc. */}
+                <span className="font-medium rounded text-gray-700">
+                  Current Price
+                </span>
+                <span className="px-2 py-1 text-sm font-medium rounded text-white bg-emerald-500">
+                  +1.72%
+                </span>
+              </div>
+            </Card>
+          </Box>
         </Box>
 
         {/* ROW 3 */}
@@ -223,24 +170,28 @@ const Dashboard = () => {
           backgroundColor={colors.primary[400]}
           p="30px"
         >
-          <Typography variant="h5" fontWeight="600">
-            Campaign
+          <Typography variant="h3" fontWeight="600" textAlign="center">
+            Bus-007
+          </Typography>
+          <Typography variant="h3" fontWeight="600" textAlign="center">
+            SOC%
           </Typography>
           <Box
             display="flex"
             flexDirection="column"
             alignItems="center"
-            mt="25px"
+            justifyContent="center"
+            height="100%"
           >
-            <ProgressCircle size="125" />
+            <ProgressCircle size="130" />
             <Typography
-              variant="h5"
+              variant="h3"
               color={colors.greenAccent[500]}
-              sx={{ mt: "15px" }}
+              sx={{ mt: "10px" }}
             >
-              $48,352 revenue generated
+              91% SOC
             </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
+            <Typography variant="subtitle1">State of Charge</Typography>
           </Box>
         </Box>
         <Box

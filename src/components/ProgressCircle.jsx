@@ -1,7 +1,7 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from "../theme";
 
-const ProgressCircle = ({ progress = "0.75", size = "40" }) => {
+const ProgressCircle = ({ progress = "0.91", size = "240" }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const angle = progress * 360;
@@ -15,7 +15,9 @@ const ProgressCircle = ({ progress = "0.75", size = "40" }) => {
         width: `${size}px`,
         height: `${size}px`,
       }}
-    />
+    >
+      <span className="text-lg text-gray-700 font-medium padd">{progress*100}%</span>
+    </Box>
   );
 };
 

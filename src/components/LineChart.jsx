@@ -1,15 +1,20 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import { mockLineData as data } from "../data/mockData";
+import { mockDataSOCLine as data } from "../data/mockDataSOCLine";
 
 const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const formattedData = data.map(bus => ({
+    id: bus.id,
+    data: bus.data.map(d => ({ x: d.time, y: d.soc }))
+  }));
+
   return (
     <ResponsiveLine
-      data={data}
+      data={formattedData}
       theme={{
         axis: {
           domain: {
@@ -43,7 +48,7 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
           },
         },
       }}
-      colors={isDashboard ? { datum: "color" } : { scheme: "nivo" }} // added
+      
       margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
@@ -81,7 +86,7 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
       pointSize={8}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
-      pointBorderColor={{ from: "serieColor" }}
+      pointBorderColor={{ from: "color", modifiers: [] }} // Updated
       pointLabelYOffset={-12}
       useMesh={true}
       legends={[
