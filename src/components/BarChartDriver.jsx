@@ -1,60 +1,51 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
-import { simplifiedMockDataSOC as data } from "../data/mockDataSOC";
+import { mockDataDriversKM as data} from "../data/mockDataDrivers";
 
-const BarChart = ({ isDashboard = false }) => {
+const BarChartDriver = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  // Function to determine the color of each bar based on SOC value
-  const getBarColor = (bar) => {
-    if (bar.data.soc < 20 || bar.data.soc > 80) {
-      return "red"; // Color for SOC values under 20% and above 80%
-    } else if (bar.data.soc >= 20 && bar.data.soc <= 30) {
-      return "orange"; // Color for SOC values between 20% and 30%
-    }
-    return colors.blueAccent[400]; // Default color for other SOC values
-  };
 
   return (
     <ResponsiveBar
       data={data}
-      colors={getBarColor} //
+      colors={colors.greenAccent[400]} //
       theme={{
         // added
         axis: {
           domain: {
             line: {
-              stroke: colors.grey[100],
+              stroke: colors.grey[700],
             },
           },
           legend: {
             text: {
-              fill: colors.grey[100],
+              fill: colors.grey[700],
+              
             },
           },
           ticks: {
             line: {
-              stroke: colors.grey[100],
+              stroke: colors.grey[700],
               strokeWidth: 1,
             },
             text: {
-              fill: colors.primary[100],
-              fontSize: 18
+              fill: colors.grey[100],
+              fontSize: 18,
             },
           },
         },
         legends: {
           text: {
-            fill: colors.grey[100],
+            fill: colors.grey[900],
             color:"white"
           },
         },
       }}
       //keys={["bus-001", "bus-002", "bus-003", "bus-004", "bus-005", "bus-006"]}
-      keys={["soc"]} // Use 'soc' as the key
-      indexBy="bus"
+      keys={["km"]} // Use 'soc' as the key
+      indexBy="date"
       margin={{ top: 50, right: 130, bottom: 50, left: 80 }}
       padding={0.3}
       valueScale={{ type: "linear" }}
@@ -80,32 +71,31 @@ const BarChart = ({ isDashboard = false }) => {
           spacing: 10,
         },
       ]}
-      borderRadius={37}
+      borderRadius={7}
       borderColor={{
         from: "color",
         modifiers: [["darker", "1.6"]],
       }}
-      axisTop={null}
-      axisRight={null}
+      
       axisBottom={{
-        tickSize: 15,
+        tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "bus", // changed
+        legend: isDashboard ? undefined : "Kilometers", 
         legendPosition: "middle",
         legendOffset: 32,
       }}
       axisLeft={{
-        tickSize: 15,
+        tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
         
         legendPosition: "middle",
         legendOffset: -40,
-        tickValues: [100, 80, 60, 40, 20],
-        format: value => `${value}%` 
+        tickValues: [160, 120, 80, 40, 0],
+        format: value => `${value}km` 
       }}
-      enableLabel={false}
+      enableLabel={true}
       labelSkipWidth={12}
       labelSkipHeight={12}
       labelTextColor={{
@@ -114,10 +104,10 @@ const BarChart = ({ isDashboard = false }) => {
       }}
       role="application"
       barAriaLabel={function (e) {
-        return e.id + ": " + e.formattedValue + " in country: " + e.indexValue;
+        return e.id + ": " + e.formattedValue + "  " + e.indexValue;
       }}
     />
   );
 };
 
-export default BarChart;
+export default BarChartDriver;

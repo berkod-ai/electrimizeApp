@@ -49,7 +49,7 @@ const Calendar = () => {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+      <Header title="Calendar" />
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
@@ -65,7 +65,7 @@ const Calendar = () => {
               <ListItem
                 key={event.id}
                 sx={{
-                  backgroundColor: colors.greenAccent[500],
+                  backgroundColor: colors.grey[800],
                   margin: "10px 0",
                   borderRadius: "2px",
                 }}
@@ -113,12 +113,12 @@ const Calendar = () => {
             initialEvents={[
               {
                 id: "12315",
-                title: "All-day event",
-                date: "2023-11-21",
+                title: "Driver-training event",
+                date: "2023-12-04",
               },
               {
                 id: "5123",
-                title: "Timed event",
+                title: "CDTM - Design Fair",
                 date: "2023-11-29",
               },
             ]}

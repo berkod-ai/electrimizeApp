@@ -4,13 +4,17 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
+
+//ICONS
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import PersonIcon from '@mui/icons-material/Person';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -38,6 +42,7 @@ const Sidebar = () => {
 
   return (
     <Box
+    height={1235}
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
@@ -46,24 +51,28 @@ const Sidebar = () => {
           backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
+          padding: "20px 25px 25px 15px !important",
         },
         "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
+          color: "#a0b7f4 !important",
         },
         "& .pro-menu-item.active": {
           color: "#1b59f8 !important",
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
+      <ProSidebar 
+       width={350}
+       height={1260}
+       
+       collapsed={isCollapsed}>
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "25px 10px 25px 5px",
               color: colors.grey[100],
             }}
           >
@@ -82,12 +91,12 @@ const Sidebar = () => {
           </MenuItem>
 
           {!isCollapsed && (
-            <Box mb="25px">
+            <Box mb="35px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
-                  width="90px"
-                  height="50px"
+                  width="160px"
+                  height="160px"
                   src={`../../assets/TransviaGo.png`}
                   style={{ cursor: "pointer", borderRadius: "10%" }}
                 />
@@ -95,7 +104,7 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isCollapsed ? undefined : "15%"}>
             <Item
               title="Home"
               to="/"
@@ -108,18 +117,20 @@ const Sidebar = () => {
             <Item
               title="Vehicles"
               to="/vehicles"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<DirectionsBusIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-            <Item
-              title="Profile Form"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
+<Item
+              title="Drivers"
+              to="/drivers"
+              icon={< PersonIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+
+            
             <Item
               title="Manage Team"
               to="/team"
@@ -128,7 +139,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
+              title="Contacts"
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
@@ -143,14 +154,23 @@ const Sidebar = () => {
             />
             
 
+          
+          </Box >
+          
           {/*LOGO*/}
           {!isCollapsed && (
-            <Box mb="25px" padding={5}>
-              <Box display="flex" justifyContent="center" alignItems="center">
+            <Box 
+            height={750}
+             padding={6}>
+              <Box 
+              display="flex" 
+              flexDirection="column"
+              justifyContent="center" 
+              alignItems="center">
                 <img
                   alt="logo_Electrimize"
-                  width="90px"
-                  height="50px"
+                  width="140px"
+                  height="120px"
                   src={`../../assets/electrimize_logo.png`}
                   style={{ cursor: "pointer", borderRadius: "10%" }}
                 />
@@ -160,19 +180,19 @@ const Sidebar = () => {
               variant="h2"
               color={colors.primary[100]}
               fontWeight="bold"
-              sx={{ m: "0.1px 0 0 0" }}
+              sx={{ m: "10px 0 0 0" }}
             >
-              Electrimize
+              ElectrimizE
             </Typography>
-            <Typography variant="h5" color={colors.blueAccent[300]}>
+            <Typography 
+            variant="h6" 
+            padding={0.1}
+            color={colors.grey[400]}>
               Fleet management
             </Typography>
           </Box>
             </Box>
           )}
-          </Box >
-          
-          
           
         </Menu>
       </ProSidebar>

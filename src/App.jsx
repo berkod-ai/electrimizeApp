@@ -6,12 +6,13 @@ import Dashboard from "./scenes/dashboard";
 import Team from "./scenes/team";
 import Contacts from "./scenes/contacts";
 import Vehicles from "./scenes/vehicles";
+import BusDetails from "./scenes/busDetails";
 import Calendar from "./scenes/calendar/calendar";
-import Bar from "./scenes/bar";
+import Drivers from "./scenes/drivers";
 import Form from "./scenes/form";
-import Line from "./scenes/line";
-import Pie from "./scenes/pie";
-import Geography from "./scenes/geography";
+//import Line from "./scenes/line";
+//import Pie from "./scenes/pie";
+//import Geography from "./scenes/geography";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 
@@ -32,12 +33,13 @@ function App() {
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/vehicles" element={<Vehicles />} />
+              <Route path="/vehicles/:vehicleId" element={<BusDetails />} /> {/* New route for bus details */}
               <Route path="/form" element={<Form />} />
               <Route path="/calendar" element={<Calendar />} />
-              <Route path="/bar" element={<Bar />} />
-              <Route path="/pie" element={<Pie />} />
-              <Route path="/line" element={<Line />} />
-              <Route path="/geography" element={<Geography />} />
+              <Route path="/drivers" element={<Drivers />} />
+              {/*<Route path="/pie" element={<Pie />} />*/}
+              {/*<Route path="/line" element={<Line />} />*/}
+              {/*<Route path="/geography" element={<Geography />} />*/}
             </Routes>
           </main>
         </div>

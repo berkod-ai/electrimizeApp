@@ -1,15 +1,12 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  Typography,
-  useTheme,
-  Avatar,
-} from "@mui/material";
+import { Box, Button, Typography, useTheme, Avatar } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockDataElectricityPrices } from "../../data/mockDataElectricityPrices";
-import { mockDataDrivers} from "../../data/mockDataDrivers";
+import { mockDataDrivers } from "../../data/mockDataDrivers";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
+
 //import EmailIcon from "@mui/icons-material/Email";
 //import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 //import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -18,28 +15,67 @@ import Header from "../../components/Header";
 
 import BarChart from "../../components/BarChart";
 //import StatBox from "../../components/StatBox";
-import ProgressCircle from "../../components/ProgressCircle";
-import { DatePicker, Card, SparkAreaChart, Text, Title } from "@tremor/react";
+
+import { SparkAreaChart } from "@tremor/react";
 import { List, ListItem } from "@mui/material";
 
 import WarningIcon from "@mui/icons-material/Warning";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const downloadReport = async () => {
+    const input = document.body;
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, "PNG", 0, 0);
+    pdf.save("dashboard-report.pdf");
+  };
+
+  const downloadJSON = (data, filename) => {
+    const jsonStr = JSON.stringify(data, null, 4);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = filename;
+    link.href = url;
+    link.click();
+  };
+
+  const downloadCSV = (data, filename) => {
+    let csvStr = data.map((item) => Object.values(item).join(",")).join("\n");
+    const blob = new Blob([csvStr], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", filename);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header
+          title="DASHBOARD"
+          style={{ fontSize: "84px", fontWeight: "bold" }}
+        />
 
         <Box>
           <Button
+            onClick={downloadReport}
+          
+            
             sx={{
-              backgroundColor: colors.blueAccent[900],
+              backgroundColor: colors.grey[900],
               color: colors.primary[100],
-              fontSize: "14px",
+              fontSize: "19px",
               fontWeight: "bold",
               padding: "10px 20px",
             }}
@@ -47,32 +83,48 @@ const Dashboard = () => {
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
             Download Reports
           </Button>
+          <br /> 
+          <Button
+            onClick={() => downloadCSV(mockDataElectricityPrices, "data.csv")}
+            sx={{
+              backgroundColor: colors.grey[900],
+              color: colors.primary[100],
+              fontSize: "11px",
+              padding: "5px 10px",
+              marginRight: "65px", // Add margin right for spacing between buttons
+            }}
+          >
+            Download CSV
+          </Button>
+
+          <Button
+            onClick={() => downloadJSON(mockDataElectricityPrices, "data.json")}
+            sx={{
+              backgroundColor: colors.grey[900],
+              color: colors.primary[100],
+              fontSize: "11px",
+              padding: "5px 10px",
+            }}
+          >
+            Download JSON
+          </Button>
         </Box>
       </Box>
 
       {/* GRID & CHARTS */}
       <Box
         display="grid"
-        gridTemplateColumns="repeat(9, 1fr)"
+        gridTemplateColumns="repeat(8, 1fr)"
         gridAutoRows="min-content"
         gap="12px"
       >
         {/* ROW 1 */}
 
-        <Box
-          gridColumn="span 2" // Adjust this span to control the width of the "Select date" component
-          gridRow="span 1"
-        >
-          <DatePicker />
-        </Box>
-        <Box
-          gridColumn="span 5" // Adjust this span to control the width of the "Select date" component
-          gridRow="span 2"
-        ></Box>
+        <Box gridColumn="span 5" gridRow="span 2"></Box>
 
         {/* ROW 2 */}
         <Box
-          gridColumn="span 4"
+          gridColumn="span 5"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
         >
@@ -83,18 +135,14 @@ const Dashboard = () => {
           >
             FLEET SOC %
           </Typography>
-          <Box height="250px" mt="-20px">
+          <Box height="280px" width="1180px" mt="-20px">
             <BarChart isDashboard={true} />
           </Box>
         </Box>
 
-        <Box
-          gridColumn="span 1" // Adjust this span to control the width of the "Select date" component
-          gridRow="span 2"
-        ></Box>
         {/* ALERT Box */}
         <Box
-          gridColumn="span 3"
+          gridColumn="span 2"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           p={2}
@@ -108,40 +156,41 @@ const Dashboard = () => {
           {/* List of alerts */}
           <Box>
             <List>
-              <ListItem>BUS 1 - NEED CHARGING</ListItem>
-              <ListItem>BUS 3 - UNDER 20%</ListItem>
-              <ListItem>BUS 8 - CHARGING OVER 80%</ListItem>
-              <ListItem>BUS 11 - CHARGING OVER 80%</ListItem>
+              <ListItem>BUS-001 - CRITICIAL LEVEL</ListItem>
+              <ListItem>BUS-003 - UNDER 20%</ListItem>
+              <ListItem>BUS-007 - ATTENTION</ListItem>
+              <ListItem>BUS-008 - OVER 80%</ListItem>
+              <ListItem>BUS-011 - OVER 80%</ListItem>
               {/* More list items... */}
             </List>
           </Box>
         </Box>
-        <Box
-          gridColumn="span 2" // Adjust this span to control the width of the "Select date" component
-          gridRow="span 1"
-        ></Box>
+        <Box gridColumn="span 8" gridRow="span 1"></Box>
+        <Box gridColumn="span 8" gridRow="span 1"></Box>
 
+        <Box
+          gridColumn="span 3"
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography color={colors.grey[100]} variant="h4" fontWeight="600">
+            Electricity Price Prediction
+          </Typography>
+          <Typography variant="subtitle2" color={colors.grey[300]}>
+            Hourly Forecast for Next 24 Hours
+          </Typography>
+        </Box>
         {/**/}
         <Box
           gridColumn="span 4"
-          gridRow="span 1"
+          gridRow="span 2"
           backgroundColor={colors.primary[400]}
-          overflow="auto"
         >
           <Box display="flex" flexDirection="column" p="15px">
-            <Box borderBottom={`4px solid ${colors.primary[500]}`}>
-              <Typography
-                color={colors.grey[100]}
-                variant="h5"
-                fontWeight="600"
-              >
-                Electricity Price Prediction
-              </Typography>
-              <Typography variant="subtitle1" color={colors.grey[300]}>
-                Hourly Forecast for Next 24 Hours
-              </Typography>
-            </Box>
-
             <Box mt={3} mx="auto" style={{ maxWidth: "90%" }}>
               <SparkAreaChart
                 data={mockDataElectricityPrices.map((item) => ({
@@ -151,16 +200,16 @@ const Dashboard = () => {
                 categories={["Price"]}
                 index={"time"}
                 colors={["emerald"]}
-                className="h-20 w-36"
+                className="h-20 w-96"
               />
             </Box>
 
             <Box mt={3} display="flex" justifyContent="center">
-              <Typography variant="subtitle1" color={colors.grey[700]}>
+              <Typography variant="h4" color={colors.grey[100]}>
                 Current Price:{" "}
                 <span style={{ fontWeight: "bold" }}>€0.1823 per KWh</span>
               </Typography>
-              <Typography variant="subtitle1" color="green" ml={2}>
+              <Typography variant="h5" color="green" ml={2}>
                 Change: +0.32%
               </Typography>
             </Box>
@@ -169,61 +218,66 @@ const Dashboard = () => {
         {/** */}
 
         {/* ROW 3 */}
-        
-        <Box
-          gridColumn="span 4" // Adjust this span to control the width of the "Select date" component
-          gridRow="span 1"
-        ></Box>
-        
+
+        <Box gridColumn="span 8" gridRow="span 1"></Box>
 
         {/*ROW4 */}
+        <Box gridColumn="span 8" gridRow="span 1"></Box>
         <Box
-          gridColumn="span 2" // Adjust this span to control the width of the "Select date" component
-          gridRow="span 1"
-        ></Box>
-
+          gridColumn="span 3"
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+            ACTIVE DRIVERS
+          </Typography>
+        </Box>
         <Box
-          gridColumn="span 5"
-          gridRow="span 3"
+          gridColumn="span 4"
+          gridRow="span 2"
           backgroundColor={colors.primary[400]}
         >
           <Box
-            mt="25px"
-            p="0 30px"
+            mt="15px"
+            p="0 15px"
             display="flex "
             justifyContent="space-between"
             alignItems="center"
           >
-             <Typography variant="h5" fontWeight="600">
-                  ACTIVE DRIVERS
-                </Typography>
-                <Box
-                  display="flex"
-                  justifyContent="space-around"
-                  alignItems="center"
-                  mt={2}
-                >
-                  {mockDataDrivers.map((driver, index) => (
-                    <Box key={index} textAlign="center">
-                      <Avatar
-                        src={driver.imageUrl}
-                        alt={driver.name}
-                        sx={{ width: 56, height: 56 }}
-                      />
-                      <Typography variant="subtitle2">{driver.name}</Typography>
-                    </Box>
-                  ))}
+            <Box borderBottom={`4px solid ${colors.primary[500]}`}></Box>
+
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+              mt={2}
+            >
+              {mockDataDrivers.map((driver, index) => (
+                <Box key={index} textAlign="center" style={{ padding: "10px" }}>
+                  <Avatar
+                    src={driver.imageUrl}
+                    alt={driver.name}
+                    sx={{
+                      width: 85,
+                      height: 85,
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    }}
+                  />
+                  <Typography variant="subtitle1" style={{ marginTop: "5px" }}>
+                    {driver.name}
+                  </Typography>
                 </Box>
-            <Box>
-              
-               
-              
+              ))}
             </Box>
+            <Box></Box>
           </Box>
 
           {/*Row4 Geo */}
         </Box>
-        
       </Box>
     </Box>
   );

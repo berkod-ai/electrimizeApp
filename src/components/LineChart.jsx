@@ -1,7 +1,7 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import { mockDataSOC as data } from "../data/mockDataSOC";
+import { mockDataSOCBUS001 as data } from "../data/mockDataSOC";
 
 const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
   const theme = useTheme();
@@ -34,12 +34,14 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
             },
             text: {
               fill: colors.grey[100],
+              fontSize: 18,
             },
           },
         },
         legends: {
           text: {
             fill: colors.grey[100],
+            fontSize: 18
           },
         },
         tooltip: {
@@ -49,12 +51,12 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
         },
       }}
       
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 40, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: "auto",
-        max: "auto",
+        min: "0",
+        max: "100",
         stacked: true,
         reverse: false,
       }}
@@ -64,8 +66,8 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
       axisRight={null}
       axisBottom={{
         orient: "bottom",
-        tickSize: 0,
-        tickPadding: 5,
+        tickSize: 7,
+        tickPadding: 9,
         tickRotation: 0,
         legend: isDashboard ? undefined : "transportation", // added
         legendOffset: 36,
@@ -73,17 +75,17 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
       }}
       axisLeft={{
         orient: "left",
-        tickValues: 5, // added
-        tickSize: 3,
-        tickPadding: 5,
+        tickValues: 6, // added
+        tickSize: 7,
+        tickPadding: 9,
         tickRotation: 0,
         legend: isDashboard ? undefined : "count", // added
         legendOffset: -40,
         legendPosition: "middle",
       }}
-      enableGridX={false}
-      enableGridY={false}
-      pointSize={8}
+      enableGridX={true}
+      enableGridY={true}
+      pointSize={18}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
       pointBorderColor={{ from: "color", modifiers: [] }} // Updated
@@ -94,8 +96,8 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
           anchor: "bottom-right",
           direction: "column",
           justify: false,
-          translateX: 100,
-          translateY: 0,
+          translateX: 95,
+          translateY: -120,
           itemsSpacing: 0,
           itemDirection: "left-to-right",
           itemWidth: 80,

@@ -1,7 +1,9 @@
 import { ResponsivePie } from "@nivo/pie";
 import { tokens } from "../theme";
 import { useTheme } from "@mui/material";
-import { mockPieData as data } from "../data/mockData";
+//import { mockPieData as data } from "../data/mockData";
+import { mockPieDataDriver as data } from "../data/mockDataDrivers";
+
 
 const PieChart = () => {
   const theme = useTheme();
@@ -13,44 +15,48 @@ const PieChart = () => {
         axis: {
           domain: {
             line: {
-              stroke: colors.grey[100],
+              stroke: colors.grey[700],
             },
           },
           legend: {
             text: {
-              fill: colors.grey[100],
+              fill: colors.grey[700],
             },
           },
           ticks: {
             line: {
-              stroke: colors.grey[100],
+              stroke: colors.grey[700],
               strokeWidth: 1,
             },
             text: {
-              fill: colors.grey[100],
+              fill: colors.grey[700],
             },
           },
         },
         legends: {
           text: {
             fill: colors.grey[100],
+            fontSize: 18,
           },
         },
       }}
-      margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+      margin={{ top: 12, right: 15, bottom: 18, left: 10 }}
+      valueFormat=" >-"
       innerRadius={0.5}
-      padAngle={0.7}
-      cornerRadius={3}
+      padAngle={0.5}
+      cornerRadius={2}
       activeOuterRadiusOffset={8}
+      borderWidth={4}
       borderColor={{
         from: "color",
         modifiers: [["darker", 0.2]],
       }}
-      arcLinkLabelsSkipAngle={10}
+      LinkLabelsSkipAngle={10}
       arcLinkLabelsTextColor={colors.grey[100]}
-      arcLinkLabelsThickness={2}
+      arcLinkLabelsDiagonalLength={7}
+      arcLiarcnkLabelsThickness={2}
       arcLinkLabelsColor={{ from: "color" }}
-      enableArcLabels={false}
+      enableArcLabels={true}  
       arcLabelsRadiusOffset={0.4}
       arcLabelsSkipAngle={7}
       arcLabelsTextColor={{
@@ -79,24 +85,24 @@ const PieChart = () => {
       ]}
       legends={[
         {
-          anchor: "bottom",
-          direction: "row",
+          anchor: "bottom-left",
+          direction: "column",
           justify: false,
-          translateX: 0,
-          translateY: 56,
-          itemsSpacing: 0,
-          itemWidth: 100,
+          translateX: 1,
+          translateY: 10,
+          itemsSpacing: 20,
+          itemWidth: 10,
           itemHeight: 18,
           itemTextColor: "#999",
           itemDirection: "left-to-right",
           itemOpacity: 1,
-          symbolSize: 18,
+          symbolSize: 28,
           symbolShape: "circle",
           effects: [
             {
               on: "hover",
               style: {
-                itemTextColor: "#000",
+                itemTextColor: "#00000",
               },
             },
           ],
