@@ -1,7 +1,7 @@
 import { ResponsivePie } from "@nivo/pie";
 import { tokens } from "../theme";
 import { useTheme } from "@mui/material";
-//import { mockPieData as data } from "../data/mockData";
+
 import { mockPieDataDriver as data } from "../data/mockDataDrivers";
 
 

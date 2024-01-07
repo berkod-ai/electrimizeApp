@@ -1,3 +1,17 @@
+/**
+ * 
+ * 
+ * Author Berkay Suleyman Dik
+ * All rights are reserved
+ *  https://github.com/berkod-ai
+ * 
+ * 
+ * 
+ */
+
+
+
+
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";

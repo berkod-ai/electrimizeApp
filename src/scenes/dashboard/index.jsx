@@ -1,3 +1,17 @@
+/**
+ * 
+ * 
+ * Author Berkay Suleyman Dik
+ * All rights are reserved
+ *  https://github.com/berkod-ai
+ * 
+ * 
+ * 
+ */
+
+
+
+
 import { Box, Button, Typography, useTheme, Avatar } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockDataElectricityPrices } from "../../data/mockDataElectricityPrices";
@@ -7,20 +21,16 @@ import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
-//import EmailIcon from "@mui/icons-material/Email";
-//import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-//import PersonAddIcon from "@mui/icons-material/PersonAdd";
-//import TrafficIcon from "@mui/icons-material/Traffic";
+
 import Header from "../../components/Header";
 
 import BarChart from "../../components/BarChart";
-//import StatBox from "../../components/StatBox";
+
 
 import { SparkAreaChart } from "@tremor/react";
 import { List, ListItem } from "@mui/material";
 
 import WarningIcon from "@mui/icons-material/Warning";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -276,7 +286,7 @@ const Dashboard = () => {
             <Box></Box>
           </Box>
 
-          {/*Row4 Geo */}
+  
         </Box>
       </Box>
     </Box>

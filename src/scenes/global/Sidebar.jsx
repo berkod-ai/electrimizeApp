@@ -1,3 +1,16 @@
+/**
+ * 
+ * 
+ * Author Berkay Suleyman Dik
+ * All rights are reserved
+ *  https://github.com/berkod-ai
+ * 
+ * 
+ * 
+ */
+
+
+
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
@@ -9,8 +22,6 @@ import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import PersonIcon from '@mui/icons-material/Person';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";

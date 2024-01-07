@@ -2,7 +2,7 @@ import { Box, Typography, Button, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";
-import { mockDataVehicles } from "../../data/mockDataVehicles"; // Assume this is your new mock data
+import { mockDataVehicles } from "../../data/mockDataVehicles"; 
 import Header from "../../components/Header";
 import { Card, Metric, CategoryBar, Legend, Text } from "@tremor/react";
 
@@ -76,7 +76,7 @@ const Vehicles = () => {
           }}
         
           onClick={() => {
-            /* Add the logic for adding a vehicle here */
+           
           }}
         >
           + Add Vehicle

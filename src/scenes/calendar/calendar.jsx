@@ -1,3 +1,16 @@
+/**
+ * 
+ * 
+ * Author Berkay Suleyman Dik
+ * All rights are reserved
+ *  https://github.com/berkod-ai
+ * 
+ * 
+ * 
+ */
+
+
+
 import { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import { formatDate } from '@fullcalendar/core'

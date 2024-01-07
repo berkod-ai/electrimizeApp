@@ -1,4 +1,15 @@
-// Create a new file BusDetails.jsx in your scenes folder
+/**
+ * 
+ * 
+ * Author Berkay Suleyman Dik
+ * All rights are reserved
+ *  https://github.com/berkod-ai
+ * 
+ * 
+ * 
+ */
+
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -11,7 +22,7 @@ import {
   Avatar,
 } from "@mui/material";
 
-import { Text, Flex, ProgressBar, CategoryBar } from "@tremor/react";
+import { Flex, ProgressBar, CategoryBar } from "@tremor/react";
 
 //import { useState } from "react";
 import { tokens } from "../../theme";
@@ -326,8 +337,6 @@ const BusDetails = () => {
               mt={2}
             ></Box>
           
-
-          {/*Row4 Geo */}
         </Box>
       </Box>
     </Box>
